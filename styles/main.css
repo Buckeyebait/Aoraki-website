@@ -121,7 +121,7 @@ ul, ol { list-style: none; }
 /* Uploaded logo asset, used at every placement */
 .brand { display: inline-flex; align-items: center; }
 .brand__logo { display: block; width: auto; height: auto; }
-.brand--nav .brand__logo { height: 96px; }
+.brand--nav .brand__logo { height: 96px; transform: translateY(10px); }
 .brand--footer .brand__logo { height: clamp(116px, 15vw, 152px); }
 
 /* =====================================================================
