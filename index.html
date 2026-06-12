@@ -25,35 +25,50 @@
   <!-- ============ SHARED LOGO ARTWORK (defined once, reused) ============ -->
   <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
     <defs>
-      <!-- Mountain mark: monochrome, faceted, inherits currentColor -->
+      <linearGradient id="aorakiSilver" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#f1f5fb" />
+        <stop offset="0.5" stop-color="#c4cedd" />
+        <stop offset="1" stop-color="#8a96ab" />
+      </linearGradient>
+
+      <!-- Mountain mark: detailed faceted silver peak (snow caps + light/shadow faces) -->
       <symbol id="aorakiMark" viewBox="0 0 240 160">
-        <path d="M26 132 L60 70 L90 100 L120 26 L148 98 L176 82 L214 132 Z" fill="currentColor"/>
-        <g fill="#000" opacity="0.22">
-          <path d="M60 70 L90 100 L90 132 L60 132 Z"/>
-          <path d="M120 26 L148 98 L148 132 L120 132 Z"/>
-          <path d="M176 82 L214 132 L176 132 Z"/>
+        <!-- silhouette -->
+        <path d="M22 134 L64 74 L94 92 L122 20 L150 98 L180 84 L218 134 Z" fill="url(#aorakiSilver)" />
+        <!-- shadow faces (right side of each peak) -->
+        <g fill="#0a1124" opacity="0.34">
+          <path d="M122 20 L150 98 L150 134 L122 134 Z" />
+          <path d="M64 74 L94 92 L94 134 L64 134 Z" />
+          <path d="M180 84 L218 134 L180 134 Z" />
         </g>
-        <path d="M120 26 L132 54 L124 52 L128 66 L120 60 L112 66 L113 52 L108 54 Z" fill="#fff" opacity="0.92"/>
+        <!-- snow caps -->
+        <g fill="#ffffff">
+          <path d="M122 20 L134 51 L126 48 L131 62 L122 55 L113 62 L118 48 L110 51 Z" />
+          <path d="M64 74 L73 90 L67 88 L70 97 L64 92 L58 97 L60 88 L55 90 Z" />
+          <path d="M180 84 L188 98 L183 96 L186 104 L180 100 L174 104 L177 96 L172 98 Z" />
+        </g>
+        <!-- crisp left-ridge highlight on the center peak -->
+        <path d="M122 20 L110 51 L113 53 L122 27 Z" fill="#ffffff" opacity="0.6" />
       </symbol>
 
       <!-- AORAKI wordmark: drawn geometric letters, chevron A's echo the peaks -->
       <symbol id="aorakiWord" viewBox="0 0 512 120">
-        <g fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+        <g fill="none" stroke="url(#aorakiSilver)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
           <!-- A -->
-          <path d="M8 100 L48 20 L88 100"/>
+          <path d="M8 100 L48 20 L88 100" />
           <!-- O -->
-          <circle cx="148" cy="60" r="40"/>
+          <circle cx="148" cy="60" r="40" />
           <!-- R -->
-          <path d="M212 100 L212 20 L242 20 C262 20 262 56 242 56 L212 56"/>
-          <path d="M238 56 L266 100"/>
+          <path d="M212 100 L212 20 L242 20 C262 20 262 56 242 56 L212 56" />
+          <path d="M238 56 L266 100" />
           <!-- A -->
-          <path d="M286 100 L326 20 L366 100"/>
+          <path d="M286 100 L326 20 L366 100" />
           <!-- K -->
-          <path d="M396 20 L396 100"/>
-          <path d="M396 60 L438 20"/>
-          <path d="M410 50 L442 100"/>
+          <path d="M396 20 L396 100" />
+          <path d="M396 60 L438 20" />
+          <path d="M410 50 L442 100" />
           <!-- I -->
-          <path d="M474 20 L474 100"/>
+          <path d="M474 20 L474 100" />
         </g>
       </symbol>
     </defs>
@@ -89,9 +104,21 @@
 
     <!-- ============ HERO ============ -->
     <section class="hero" id="hero">
-      <canvas class="hero__canvas" id="peaks" aria-hidden="true"></canvas>
-      <div class="hero__grid" aria-hidden="true"></div>
-      <div class="hero__glow" aria-hidden="true"></div>
+      <div class="hero__sky" aria-hidden="true"></div>
+      <div class="hero__aurora" aria-hidden="true">
+        <span class="aurora aurora--1"></span>
+        <span class="aurora aurora--2"></span>
+        <span class="aurora aurora--3"></span>
+        <span class="aurora aurora--4"></span>
+      </div>
+      <canvas class="hero__stars" id="stars" aria-hidden="true"></canvas>
+      <div class="hero__range" aria-hidden="true">
+        <svg viewBox="0 0 1440 320" preserveAspectRatio="none">
+          <path d="M0 320 L0 214 L150 156 L290 206 L430 128 L600 198 L770 96 L930 186 L1090 146 L1250 206 L1440 150 L1440 320 Z" fill="#101d3e" />
+          <path d="M0 320 L0 258 L200 220 L380 256 L560 210 L770 256 L990 222 L1210 260 L1440 226 L1440 320 Z" fill="#070d1f" />
+        </svg>
+      </div>
+      <div class="hero__scrim" aria-hidden="true"></div>
 
       <div class="hero__content">
         <p class="eyebrow reveal">Web design &amp; marketing · Built in the USA</p>
@@ -117,14 +144,14 @@
       <div class="strip__item"><strong>Built from scratch</strong><span>No drag-and-drop templates</span></div>
       <div class="strip__item"><strong>Mobile-first</strong><span>Sharp on every screen</span></div>
       <div class="strip__item"><strong>Fast to load</strong><span>Speed people actually feel</span></div>
-      <div class="strip__item"><strong>You deal with me</strong><span>No agency markup</span></div>
+      <div class="strip__item"><strong>You deal with us</strong><span>No agency markup</span></div>
     </section>
 
     <!-- ============ WORK ============ -->
     <section class="section" id="work">
       <div class="section__head reveal">
         <p class="eyebrow">Selected work</p>
-        <h2 class="section__title">The kind of sites I build</h2>
+        <h2 class="section__title">The kind of sites we build</h2>
         <p class="section__lead">
           A few example builds that show the range — from a one-page local service business
           to a full online store. Yours takes their place once we launch it.
@@ -198,7 +225,7 @@
     <!-- ============ SERVICES ============ -->
     <section class="section" id="services">
       <div class="section__head reveal">
-        <p class="eyebrow">What I build</p>
+        <p class="eyebrow">What we build</p>
         <h2 class="section__title">Pick what fits your business</h2>
       </div>
 
@@ -216,12 +243,12 @@
         <article class="card reveal">
           <div class="card__num">03</div>
           <h3>Redesigns</h3>
-          <p>Already have a site that looks dated or loads slow? I rebuild it to be faster, clearer, and easy to use on a phone.</p>
+          <p>Already have a site that looks dated or loads slow? We rebuild it to be faster, clearer, and easy to use on a phone.</p>
         </article>
         <article class="card reveal">
           <div class="card__num">04</div>
           <h3>Care &amp; updates</h3>
-          <p>A monthly plan that keeps your site backed up, online, and current. You email me changes and I handle them, usually within a day.</p>
+          <p>A monthly plan that keeps your site backed up, online, and current. You email us changes and we handle them, usually within a day.</p>
         </article>
       </div>
     </section>
@@ -245,21 +272,21 @@
           <span class="step__num">02</span>
           <div class="step__body">
             <h3>Design first</h3>
-            <p>I send you a design of the homepage before building anything. You tell me what to change.</p>
+            <p>We send you a design of the homepage before building anything. You tell us what to change.</p>
           </div>
         </li>
         <li class="step reveal">
           <span class="step__num">03</span>
           <div class="step__body">
-            <h3>I build it</h3>
-            <p>I build the full site on your domain, working on every screen size, with everything hooked up.</p>
+            <h3>We build it</h3>
+            <p>We build the full site on your domain, working on every screen size, with everything hooked up.</p>
           </div>
         </li>
         <li class="step reveal">
           <span class="step__num">04</span>
           <div class="step__body">
             <h3>Launch</h3>
-            <p>Your site goes live. I walk you through it, and I'm around when you need a change.</p>
+            <p>Your site goes live. We walk you through it, and we're around when you need a change.</p>
           </div>
         </li>
       </ol>
@@ -289,7 +316,7 @@
         <article class="price price--featured reveal">
           <div class="price__flag">Most popular</div>
           <h3>Business website</h3>
-          <div class="price__amt">$1,500</div>
+          <div class="price__amt">$1,000</div>
           <ul>
             <li>Up to 6 custom pages</li>
             <li>Mobile-ready design</li>
@@ -324,7 +351,7 @@
         <div class="ads__text">
           <p class="eyebrow">Also available</p>
           <h2 class="section__title">Need traffic, not just a website?</h2>
-          <p>Once your site is live, I can run the ads that fill it — Google and Meta campaigns aimed at real calls, bookings, and sales. It's a smaller part of what I do, so we keep it simple: tell me your goal on a call and I'll put a plan together.</p>
+          <p>Once your site is live, we can run the ads that fill it — Google and Meta campaigns aimed at real calls, bookings, and sales. It's a smaller part of what we do, so we keep it simple: tell us your goal on a call and we'll put a plan together.</p>
           <a href="#start" class="btn btn--ghost">Ask about marketing <span class="arrow">&rarr;</span></a>
         </div>
         <div class="ads__mark" aria-hidden="true">
@@ -338,14 +365,23 @@
       <div class="about__inner">
         <div class="about__text reveal">
           <p class="eyebrow">About</p>
-          <h2 class="section__title">You work with Evan, not an agency</h2>
-          <p>I'm Evan — an engineering student at Ohio State and an Ironman triathlete who builds websites for a living. I qualified for the 70.3 World Championships by showing up every day and doing the work.</p>
-          <p>I run my web projects the same way. I tell you exactly what I'll deliver, I keep you in the loop, and I don't hand over anything that isn't finished and working. You deal with me directly — no markup, no account managers, no runaround.</p>
+          <h2 class="section__title">You work directly with us, not an agency</h2>
+          <p>Aoraki Creations is a two-person team — Evan and Gavin. You work directly with us: no markup, no account managers, no runaround. We tell you exactly what we'll deliver, keep you in the loop, and never hand over anything that isn't finished and working.</p>
+          <div class="team">
+            <div class="team__member">
+              <h3>Evan</h3>
+              <p>Engineering student at Ohio State and an Ironman triathlete who qualified for the 70.3 World Championships. He brings that same daily discipline to every build.</p>
+            </div>
+            <div class="team__member">
+              <h3>Gavin</h3>
+              <p>Engineering student at Ohio Northern University. Hardworking, dependable, and service-oriented — focused on delivering work that's done right.</p>
+            </div>
+          </div>
           <a href="#start" class="btn btn--solid">Let's build yours <span class="arrow">&rarr;</span></a>
         </div>
         <div class="about__stats reveal">
           <div class="stat"><strong>USA</strong><span>Based and building in the United States</span></div>
-          <div class="stat"><strong>1-on-1</strong><span>You work with me start to finish</span></div>
+          <div class="stat"><strong>Direct</strong><span>You work with the founders start to finish</span></div>
           <div class="stat"><strong>Flat rate</strong><span>Price agreed before any work starts</span></div>
           <div class="stat"><strong>Done = done</strong><span>Nothing handed over half-built</span></div>
         </div>
@@ -357,8 +393,8 @@
       <div class="start__inner">
         <div class="start__head reveal">
           <p class="eyebrow">Start a project</p>
-          <h2 class="section__title">Tell me about your business</h2>
-          <p class="section__lead">Fill this out and I'll get back to you within one business day with next steps. No cost, no commitment.</p>
+          <h2 class="section__title">Tell us about your business</h2>
+          <p class="section__lead">Fill this out and we'll get back to you within one business day with next steps. No cost, no commitment.</p>
         </div>
 
         <form class="form reveal" id="projectForm" novalidate>
@@ -390,12 +426,12 @@
           </div>
           <label class="form__full">
             <span>What do you need?</span>
-            <textarea name="message" rows="5" required placeholder="A new website for my plumbing business. I want people to be able to call and book online."></textarea>
+            <textarea name="message" rows="5" required placeholder="A new website for our plumbing business — we want people to be able to call and book online."></textarea>
           </label>
 
           <div class="form__actions">
             <button type="submit" class="btn btn--solid">Send it <span class="arrow">&rarr;</span></button>
-            <p class="form__or">or email me directly at <a href="mailto:aoraki@aorakicreations.com">aoraki@aorakicreations.com</a></p>
+            <p class="form__or">or email us directly at <a href="mailto:aorakicreations@gmail.com">aorakicreations@gmail.com</a></p>
           </div>
           <p class="form__status" id="formStatus" role="status" aria-live="polite"></p>
         </form>
@@ -418,7 +454,7 @@
         <a href="#pricing">Pricing</a>
         <a href="#about">About</a>
         <a href="#start">Start a project</a>
-        <a href="mailto:aoraki@aorakicreations.com">Email</a>
+        <a href="mailto:aorakicreations@gmail.com">Email</a>
       </nav>
     </div>
     <div class="footer__base">

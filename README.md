@@ -12,16 +12,11 @@ Double-click **`index.html`**. It opens in your browser. That's it.
 
 ---
 
-## ⚠️ One thing to set up: your email inbox
+## Where leads go
 
-The whole site points leads to **aoraki@aorakicreations.com** — the contact button, the form, and the footer all use it.
+The whole site points leads to **aorakicreations@gmail.com** — the contact button, the form, and the footer all use it. Since that's a normal Gmail inbox, it works right away: messages land in that inbox with nothing to set up.
 
-For that to actually reach you, **that inbox has to exist.** Two ways to handle it:
-
-1. **Own the domain + make the inbox.** If you set up `aorakicreations.com` and create the `aoraki@` mailbox, you're done — messages land there.
-2. **Point it somewhere you already check.** If you'd rather route leads to your Gmail (or any address), just tell Claude "change the site email to ___" and it's a 30-second change in two files.
-
-Until the inbox exists, the form still *works* (it opens the visitor's email app addressed to you), but mail sent to `aoraki@aorakicreations.com` won't go anywhere.
+Want to use a branded address later (like `hello@aorakicreations.com`)? Tell Claude "change the site email to ___" — it's a 30-second change in two files.
 
 ---
 
@@ -41,7 +36,7 @@ To use your own domain (`aorakicreations.com`) instead, that's a setting on the 
 
 Everything you'd want to edit is in **`index.html`**. Search for the text you see on the page and change it. Common edits:
 
-- **Your email** — set to `aoraki@aorakicreations.com` in two places (`index.html` and `scripts/main.js`). Change both.
+- **Your email** — set to `aorakicreations@gmail.com` in two places (`index.html` and `scripts/main.js`). Change both.
 - **Prices** — in `index.html`, find the "PRICING" section.
 - **Services / copy** — same file, find the section by its heading.
 

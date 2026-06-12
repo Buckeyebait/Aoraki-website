@@ -15,7 +15,7 @@
        2. Paste the URL they give you between the quotes below.
        3. Re-publish.
   ------------------------------------------------------------------- */
-  var CONTACT_EMAIL = 'aoraki@aorakicreations.com';
+  var CONTACT_EMAIL = 'aorakicreations@gmail.com';
   var FORM_ENDPOINT = ''; // e.g. 'https://formspree.io/f/abcdwxyz'
 
   var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -69,57 +69,60 @@
   var yearEl = document.getElementById('year');
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-  /* ---------------- hero canvas: drifting particles ---------------- */
-  var canvas = document.getElementById('peaks');
-  if (canvas && !prefersReduced) {
+  /* ---------------- hero stars: subtle twinkle ---------------- */
+  var canvas = document.getElementById('stars');
+  if (canvas && canvas.getContext) {
     var ctx = canvas.getContext('2d');
-    var dots = [];
-    var w, h, dpr;
+    var stars = [];
+    var w, h, dpr, raf;
+    var twinkle = !prefersReduced;
 
-    function size() {
+    function buildStars() {
       dpr = Math.min(window.devicePixelRatio || 1, 2);
       w = canvas.clientWidth;
       h = canvas.clientHeight;
       canvas.width = w * dpr;
       canvas.height = h * dpr;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      var count = Math.min(90, Math.round(w * h / 16000));
-      dots = [];
+      // fewer stars on small screens; weighted toward the upper sky
+      var count = Math.min(170, Math.round(w * h / 8500));
+      stars = [];
       for (var i = 0; i < count; i++) {
-        dots.push({
+        stars.push({
           x: Math.random() * w,
-          y: Math.random() * h,
-          r: Math.random() * 1.5 + 0.4,
-          vx: (Math.random() - 0.5) * 0.12,
-          vy: -(Math.random() * 0.22 + 0.05),
-          a: Math.random() * 0.5 + 0.15
+          y: Math.pow(Math.random(), 1.5) * h * 0.82,
+          r: Math.random() * 1.3 + 0.35,
+          base: Math.random() * 0.5 + 0.3,
+          amp: Math.random() * 0.4 + 0.15,
+          speed: Math.random() * 1.6 + 0.4,
+          phase: Math.random() * Math.PI * 2
         });
       }
     }
 
-    function frame() {
+    function drawStars(t) {
       ctx.clearRect(0, 0, w, h);
-      for (var i = 0; i < dots.length; i++) {
-        var d = dots[i];
-        d.x += d.vx; d.y += d.vy;
-        if (d.y < -4) { d.y = h + 4; d.x = Math.random() * w; }
-        if (d.x < -4) d.x = w + 4;
-        if (d.x > w + 4) d.x = -4;
+      for (var i = 0; i < stars.length; i++) {
+        var s = stars[i];
+        var a = s.base + (twinkle ? Math.sin(t * 0.001 * s.speed + s.phase) * s.amp : 0);
+        if (a < 0.04) a = 0.04;
         ctx.beginPath();
-        ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(150,180,255,' + d.a + ')';
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(214,228,255,' + a + ')';
         ctx.fill();
       }
-      raf = requestAnimationFrame(frame);
     }
 
-    var raf;
-    size();
-    frame();
+    function loop(t) { drawStars(t); raf = requestAnimationFrame(loop); }
+
+    buildStars();
+    if (twinkle) raf = requestAnimationFrame(loop);
+    else drawStars(0);
+
     var rt;
     window.addEventListener('resize', function () {
       clearTimeout(rt);
-      rt = setTimeout(size, 200);
+      rt = setTimeout(function () { buildStars(); if (!twinkle) drawStars(0); }, 200);
     });
   }
 
@@ -159,12 +162,12 @@
         }).then(function (res) {
           if (res.ok) {
             form.reset();
-            setStatus('Got it — I\'ll get back to you within one business day.', 'ok');
+            setStatus('Got it — we\'ll get back to you within one business day.', 'ok');
           } else {
-            setStatus('Something went wrong. Email me directly at ' + CONTACT_EMAIL + '.', 'err');
+            setStatus('Something went wrong. Email us directly at ' + CONTACT_EMAIL + '.', 'err');
           }
         }).catch(function () {
-          setStatus('Something went wrong. Email me directly at ' + CONTACT_EMAIL + '.', 'err');
+          setStatus('Something went wrong. Email us directly at ' + CONTACT_EMAIL + '.', 'err');
         });
         return;
       }
@@ -182,7 +185,7 @@
       window.location.href = 'mailto:' + CONTACT_EMAIL +
         '?subject=' + encodeURIComponent(subject) +
         '&body=' + encodeURIComponent(body);
-      setStatus('Opening your email app… if nothing happens, write me at ' + CONTACT_EMAIL + '.', 'ok');
+      setStatus('Opening your email app… if nothing happens, write us at ' + CONTACT_EMAIL + '.', 'ok');
     });
   }
 })();

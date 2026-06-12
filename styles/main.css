@@ -221,29 +221,79 @@ ul, ol { list-style: none; }
   justify-content: center;
   padding: 120px var(--pad) 90px;
   overflow: hidden;
+  isolation: isolate;
   border-bottom: 1px solid var(--line-soft);
+  background: #04060e;
 }
-.hero__canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; }
-.hero__grid {
-  position: absolute; inset: 0; z-index: 1;
-  background-image:
-    linear-gradient(var(--line-soft) 1px, transparent 1px),
-    linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
-  background-size: 64px 64px;
-  mask-image: radial-gradient(120% 90% at 50% 0%, #000 35%, transparent 78%);
-  -webkit-mask-image: radial-gradient(120% 90% at 50% 0%, #000 35%, transparent 78%);
+
+/* --- night sky --- */
+.hero__sky {
+  position: absolute; inset: 0; z-index: 0;
+  background:
+    radial-gradient(150% 100% at 50% -15%, #16284f 0%, #0c1733 34%, #081026 58%, #04060e 100%);
+}
+
+/* --- aurora ribbons (slow, screen-blended light curtains) --- */
+.hero__aurora { position: absolute; inset: 0; z-index: 2; overflow: hidden; pointer-events: none; }
+.aurora {
+  position: absolute; top: -22%; height: 116%; width: 40%;
+  filter: blur(36px);
+  mix-blend-mode: screen;
   opacity: 0.6;
+  will-change: transform, opacity;
+  transform: translateZ(0);
 }
-.hero__glow {
-  position: absolute; z-index: 1;
-  top: -25%; left: 50%; transform: translateX(-50%);
-  width: 900px; height: 900px; max-width: 130%;
-  background: radial-gradient(circle, rgba(111,155,255,0.16), transparent 60%);
-  filter: blur(20px);
-  pointer-events: none;
+.aurora--1 {
+  left: -8%; rotate: -17deg;
+  background: linear-gradient(to bottom, transparent 6%, rgba(72,232,165,0.55) 44%, rgba(72,232,165,0.10) 74%, transparent 92%);
+  animation: auroraDrift 24s ease-in-out infinite alternate;
 }
-.hero__content { position: relative; z-index: 2; max-width: var(--wrap); margin: 0 auto; width: 100%; }
-.hero .eyebrow { display: block; margin-bottom: 26px; }
+.aurora--2 {
+  left: 18%; rotate: -6deg; opacity: 0.42;
+  background: linear-gradient(to bottom, transparent 8%, rgba(108,224,206,0.5) 46%, rgba(108,224,206,0.10) 74%, transparent 92%);
+  animation: auroraDrift2 31s ease-in-out infinite alternate;
+  animation-delay: -7s;
+}
+.aurora--3 {
+  right: 12%; rotate: 12deg;
+  background: linear-gradient(to bottom, transparent 6%, rgba(150,98,228,0.5) 44%, rgba(150,98,228,0.12) 74%, transparent 92%);
+  animation: auroraDrift 28s ease-in-out infinite alternate;
+  animation-delay: -13s;
+}
+.aurora--4 {
+  right: -10%; rotate: 22deg; opacity: 0.4;
+  background: linear-gradient(to bottom, transparent 8%, rgba(198,104,212,0.45) 46%, rgba(198,104,212,0.10) 74%, transparent 92%);
+  animation: auroraDrift2 35s ease-in-out infinite alternate;
+  animation-delay: -4s;
+}
+@keyframes auroraDrift {
+  0%   { translate: -5% -2%; scale: 1 1;       opacity: 0.32; }
+  50%  { translate: 4% 2%;   scale: 1.06 1.10; opacity: 0.60; }
+  100% { translate: 7% -1%;  scale: 0.98 0.95; opacity: 0.42; }
+}
+@keyframes auroraDrift2 {
+  0%   { translate: 4% 1%;   scale: 1.05 1.05; opacity: 0.28; }
+  50%  { translate: -4% -2%; scale: 0.95 0.92; opacity: 0.52; }
+  100% { translate: -7% 2%;  scale: 1.08 1.12; opacity: 0.36; }
+}
+
+/* --- stars (canvas, drawn + twinkled in main.js) --- */
+.hero__stars { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; }
+
+/* --- foreground mountain horizon --- */
+.hero__range { position: absolute; left: 0; right: 0; bottom: 0; z-index: 3; height: 36%; min-height: 150px; pointer-events: none; }
+.hero__range svg { width: 100%; height: 100%; display: block; }
+
+/* --- readability scrim --- */
+.hero__scrim {
+  position: absolute; inset: 0; z-index: 4; pointer-events: none;
+  background:
+    linear-gradient(to top, rgba(4,6,14,0.74) 0%, rgba(4,6,14,0.30) 26%, rgba(4,6,14,0) 56%),
+    radial-gradient(95% 75% at 20% 56%, rgba(4,6,14,0.62), rgba(4,6,14,0) 62%);
+}
+
+.hero__content { position: relative; z-index: 5; max-width: var(--wrap); margin: 0 auto; width: 100%; }
+.hero .eyebrow { display: block; margin-bottom: 26px; color: #b9c6dc; }
 .hero__title {
   font-family: var(--display);
   font-weight: 900;
@@ -251,6 +301,7 @@ ul, ol { list-style: none; }
   line-height: 0.92;
   letter-spacing: -0.03em;
   text-transform: uppercase;
+  text-shadow: 0 4px 40px rgba(0, 0, 0, 0.55);
 }
 .hero__title span { display: block; }
 .hero__title span:last-child { color: transparent; -webkit-text-stroke: 1.4px var(--ink); }
@@ -258,13 +309,14 @@ ul, ol { list-style: none; }
   margin-top: 30px;
   max-width: 580px;
   font-size: clamp(1.02rem, 1.7vw, 1.28rem);
-  color: var(--muted);
+  color: #c4ccda;
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.5);
 }
 .hero__actions { margin-top: 40px; display: flex; gap: 14px; flex-wrap: wrap; }
 
 .hero__scroll {
   position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%);
-  z-index: 2; width: 26px; height: 42px;
+  z-index: 6; width: 26px; height: 42px;
   border: 1px solid var(--line); border-radius: 14px;
   display: flex; justify-content: center;
 }
@@ -432,6 +484,18 @@ ul, ol { list-style: none; }
 .stat strong { font-family: var(--display); font-weight: 800; font-size: 1.5rem; letter-spacing: -0.01em; }
 .stat span { color: var(--muted); font-size: 0.86rem; }
 
+/* two-person team */
+.team {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 26px;
+  margin: 30px 0 4px;
+  padding-top: 28px;
+  border-top: 1px solid var(--line-soft);
+}
+.team__member h3 { font-family: var(--display); font-weight: 700; font-size: 1.15rem; letter-spacing: -0.01em; margin-bottom: 8px; }
+.team__member p { color: var(--muted); font-size: 0.92rem; margin: 0; max-width: none; }
+
 /* =====================================================================
    START / FORM
    ===================================================================== */
@@ -512,7 +576,11 @@ ul, ol { list-style: none; }
   .cards { grid-template-columns: 1fr; }
   .form__row { grid-template-columns: 1fr; }
   .about__stats { grid-template-columns: 1fr 1fr; }
+  .team { grid-template-columns: 1fr; gap: 20px; }
   .footer__base { justify-content: center; text-align: center; }
+  /* lighter aurora on phones for performance */
+  .aurora { filter: blur(30px); }
+  .aurora--4 { display: none; }
 }
 
 @media (max-width: 420px) {
@@ -526,5 +594,7 @@ ul, ol { list-style: none; }
   html { scroll-behavior: auto; }
   .reveal { opacity: 1; transform: none; transition: none; }
   .hero__scroll span { animation: none; }
-  * { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+  /* aurora holds a calm static frame when motion is disabled */
+  .aurora { animation: none !important; opacity: 0.5; }
+  * { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; }
 }
