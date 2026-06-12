@@ -11,7 +11,7 @@
   <meta property="og:description" content="Fast, clean custom websites for small businesses across the US. Built to bring you customers." />
   <meta property="og:type" content="website" />
 
-  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="assets/favicon.png" type="image/png" />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -22,67 +22,11 @@
 </head>
 <body>
 
-  <!-- ============ SHARED LOGO ARTWORK (defined once, reused) ============ -->
-  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
-    <defs>
-      <linearGradient id="aorakiSilver" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0" stop-color="#f1f5fb" />
-        <stop offset="0.5" stop-color="#c4cedd" />
-        <stop offset="1" stop-color="#8a96ab" />
-      </linearGradient>
-
-      <!-- Mountain mark: detailed faceted silver peak (snow caps + light/shadow faces) -->
-      <symbol id="aorakiMark" viewBox="0 0 240 160">
-        <!-- silhouette -->
-        <path d="M22 134 L64 74 L94 92 L122 20 L150 98 L180 84 L218 134 Z" fill="url(#aorakiSilver)" />
-        <!-- shadow faces (right side of each peak) -->
-        <g fill="#0a1124" opacity="0.34">
-          <path d="M122 20 L150 98 L150 134 L122 134 Z" />
-          <path d="M64 74 L94 92 L94 134 L64 134 Z" />
-          <path d="M180 84 L218 134 L180 134 Z" />
-        </g>
-        <!-- snow caps -->
-        <g fill="#ffffff">
-          <path d="M122 20 L134 51 L126 48 L131 62 L122 55 L113 62 L118 48 L110 51 Z" />
-          <path d="M64 74 L73 90 L67 88 L70 97 L64 92 L58 97 L60 88 L55 90 Z" />
-          <path d="M180 84 L188 98 L183 96 L186 104 L180 100 L174 104 L177 96 L172 98 Z" />
-        </g>
-        <!-- crisp left-ridge highlight on the center peak -->
-        <path d="M122 20 L110 51 L113 53 L122 27 Z" fill="#ffffff" opacity="0.6" />
-      </symbol>
-
-      <!-- AORAKI wordmark: drawn geometric letters, chevron A's echo the peaks -->
-      <symbol id="aorakiWord" viewBox="0 0 512 120">
-        <g fill="none" stroke="url(#aorakiSilver)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
-          <!-- A -->
-          <path d="M8 100 L48 20 L88 100" />
-          <!-- O -->
-          <circle cx="148" cy="60" r="40" />
-          <!-- R -->
-          <path d="M212 100 L212 20 L242 20 C262 20 262 56 242 56 L212 56" />
-          <path d="M238 56 L266 100" />
-          <!-- A -->
-          <path d="M286 100 L326 20 L366 100" />
-          <!-- K -->
-          <path d="M396 20 L396 100" />
-          <path d="M396 60 L438 20" />
-          <path d="M410 50 L442 100" />
-          <!-- I -->
-          <path d="M474 20 L474 100" />
-        </g>
-      </symbol>
-    </defs>
-  </svg>
-
   <!-- ============ NAV ============ -->
   <header class="nav" id="nav">
     <div class="nav__inner">
       <a href="#top" class="brand brand--nav" aria-label="Aoraki Creations home">
-        <svg class="brand__mark" viewBox="0 0 240 160" aria-hidden="true"><use href="#aorakiMark"/></svg>
-        <span class="brand__text">
-          <span class="brand__name">AORAKI</span>
-          <span class="brand__sub">CREATIONS</span>
-        </span>
+        <img class="brand__logo" src="assets/aoraki-logo.png" alt="Aoraki Creations" width="600" height="591" />
       </a>
 
       <nav class="nav__links" id="navLinks" aria-label="Primary">
@@ -355,7 +299,7 @@
           <a href="#start" class="btn btn--ghost">Ask about marketing <span class="arrow">&rarr;</span></a>
         </div>
         <div class="ads__mark" aria-hidden="true">
-          <svg viewBox="0 0 240 160"><use href="#aorakiMark"/></svg>
+          <img src="assets/aoraki-logo.png" alt="" width="600" height="591" />
         </div>
       </div>
     </section>
@@ -443,9 +387,7 @@
   <footer class="footer">
     <div class="footer__inner">
       <a href="#top" class="brand brand--footer" aria-label="Aoraki Creations home">
-        <svg class="brand__mark" viewBox="0 0 240 160" aria-hidden="true"><use href="#aorakiMark"/></svg>
-        <svg class="brand__word" viewBox="0 0 512 120" aria-hidden="true"><use href="#aorakiWord"/></svg>
-        <span class="brand__creations"><i></i>CREATIONS<i></i></span>
+        <img class="brand__logo" src="assets/aoraki-logo.png" alt="Aoraki Creations" width="600" height="591" />
       </a>
 
       <nav class="footer__links" aria-label="Footer">

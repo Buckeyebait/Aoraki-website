@@ -12,6 +12,8 @@ Icon
 # logs
 *.log
 
-# brand reference mockups (kept locally for reference; not used by the site)
+# brand source/reference files (kept locally; the site uses assets/aoraki-logo.png)
 Aoraki Logo Dark.jpeg
 Aoraki Logo Dark.png
+Aoraki-Creations-Logo.svg
+Aoraki-Logo-Dark-Original.svg

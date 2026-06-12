@@ -104,7 +104,7 @@
       ctx.clearRect(0, 0, w, h);
       for (var i = 0; i < stars.length; i++) {
         var s = stars[i];
-        var a = s.base + (twinkle ? Math.sin(t * 0.001 * s.speed + s.phase) * s.amp : 0);
+        var a = s.base + (twinkle ? Math.sin(t * 0.003 * s.speed + s.phase) * s.amp : 0);
         if (a < 0.04) a = 0.04;
         ctx.beginPath();
         ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
