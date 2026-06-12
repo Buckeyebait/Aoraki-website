@@ -121,7 +121,7 @@ ul, ol { list-style: none; }
 /* Uploaded logo asset, used at every placement */
 .brand { display: inline-flex; align-items: center; }
 .brand__logo { display: block; width: auto; height: auto; }
-.brand--nav .brand__logo { height: 72px; }
+.brand--nav .brand__logo { height: 96px; }
 .brand--footer .brand__logo { height: clamp(116px, 15vw, 152px); }
 
 /* =====================================================================
@@ -151,7 +151,7 @@ ul, ol { list-style: none; }
 .nav__inner {
   max-width: var(--wrap);
   margin: 0 auto;
-  padding: 16px var(--pad);
+  padding: 4px var(--pad);
   display: flex;
   align-items: center;
   justify-content: space-between;
