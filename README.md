@@ -58,7 +58,9 @@ To get submissions delivered to your inbox without the visitor's mail app openin
 
 ## Add real projects to the "Work" section
 
-The Work section shows three example layouts drawn in code (no photos needed). When you have a real site to show, take a screenshot and tell Claude "add this to my Work section" — it swaps a drawn mockup for your image.
+The Work section shows three real site screenshots, each in a little browser frame: one **live** build (Webster's Skyvision) and two **concept** designs (a hunting outfitter and a café). The images live in `assets/work/` (`websters.jpg`, `stonefork.jpg`, `wren.jpg`) and each card carries a "Live site" or "Concept" badge so visitors know which is which.
+
+When you launch a real site, take a screenshot and tell Claude "add this to my Work section." It drops in the new image, sets the badge to "Live site," and writes the caption.
 
 ---
 
