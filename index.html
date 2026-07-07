@@ -84,10 +84,13 @@
     <!-- ============ TRUST / FOX FEATURE ============ -->
     <section class="foxfeat" id="proof" aria-label="What you get">
       <div class="foxfeat__frame" aria-hidden="true">
-        <video class="foxfeat__video" id="foxVideo" muted playsinline preload="auto" fetchpriority="high"
+        <!-- muted + playsinline + webkit-playsinline = allowed to autoplay on iOS.
+             MP4 (H.264) listed first so iOS grabs a guaranteed-supported format
+             immediately instead of fetching and discarding the WebM. -->
+        <video class="foxfeat__video" id="foxVideo" muted playsinline webkit-playsinline preload="auto" fetchpriority="high"
                poster="assets/fox/fox-point-poster.jpg">
-          <source src="assets/fox/fox-point.webm" type="video/webm" />
           <source src="assets/fox/fox-point.mp4" type="video/mp4" />
+          <source src="assets/fox/fox-point.webm" type="video/webm" />
         </video>
         <div class="foxfeat__scrim"></div>
       </div>

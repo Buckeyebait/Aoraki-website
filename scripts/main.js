@@ -70,9 +70,10 @@
      having finished). Each .foxcue element pops in when the video passes its
      data-fox-cue timestamp, so the copy appears as the fox walks across the
      frame. Every failure path ends in foxShowAll() — the info is never
-     allowed to stay hidden. Playback only starts once the video has enough
-     buffered to run without stalling (readyState check below) — starting on
-     an under-buffered video is what caused the stutter on a fast scroll-in. */
+     allowed to stay hidden. We call play() directly rather than waiting on
+     readyState: mobile browsers (iOS especially) ignore preload="auto" and
+     only fetch the video once play() is called, so gating on buffering would
+     leave the fox frozen on its poster on phones. */
   var foxVideo = document.getElementById('foxVideo');
   var foxCues = document.querySelectorAll('.foxcue');
   var foxRaf;
@@ -136,18 +137,20 @@
       if (foxActive) return; // already mid-run — don't restart out from under it
       foxActive = true;
       foxReset();
-      foxVideo.currentTime = 0;
       clearTimeout(foxTimeout);
       foxTimeout = setTimeout(foxEndRun, 8000); // belt and suspenders
 
-      if (foxVideo.readyState >= 3 /* HAVE_FUTURE_DATA — enough buffered to play without an immediate stall */) {
-        foxPlayNow();
-      } else {
-        foxVideo.addEventListener('canplay', function onReady() {
-          foxVideo.removeEventListener('canplay', onReady);
-          if (foxActive) foxPlayNow();
-        });
+      // Only rewind when there is a decoded frame to land on and we're actually
+      // past the start (i.e. a replay). On the very first play the video is
+      // already at 0, and seeking an unbuffered element is what caused the
+      // one-frame flash on a fast scroll-in.
+      if (foxVideo.readyState >= 2 /* HAVE_CURRENT_DATA */ && foxVideo.currentTime > 0.1) {
+        try { foxVideo.currentTime = 0; } catch (e) {}
       }
+
+      // play() itself kicks off loading on mobile — the poster stays up until
+      // the first frame is ready, so there's no gap.
+      foxPlayNow();
     }
 
     // if the browser pauses the video mid-run (tab switch etc), pick it back up
