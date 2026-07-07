@@ -30,7 +30,6 @@
       </a>
 
       <nav class="nav__links" id="navLinks" aria-label="Primary">
-        <a href="#work">Work</a>
         <a href="#services">Services</a>
         <a href="#process">Process</a>
         <a href="#pricing">Pricing</a>
@@ -76,80 +75,32 @@
         </p>
         <div class="hero__actions reveal">
           <a href="#start" class="btn btn--solid">Start your project <span class="arrow">&rarr;</span></a>
-          <a href="#work" class="btn btn--ghost">See the work</a>
         </div>
       </div>
 
-      <a href="#work" class="hero__scroll" aria-label="Scroll down"><span></span></a>
+      <a href="#proof" class="hero__scroll" aria-label="Scroll down"><span></span></a>
     </section>
 
-    <!-- ============ TRUST STRIP ============ -->
-    <section class="strip" aria-label="What you get">
-      <div class="strip__item"><strong>Built from scratch</strong><span>No drag-and-drop templates</span></div>
-      <div class="strip__item"><strong>Mobile-first</strong><span>Sharp on every screen</span></div>
-      <div class="strip__item"><strong>Fast to load</strong><span>Speed people actually feel</span></div>
-      <div class="strip__item"><strong>You deal with us</strong><span>No agency markup</span></div>
-    </section>
-
-    <!-- ============ WORK ============ -->
-    <section class="section" id="work">
-      <div class="section__head reveal">
-        <p class="eyebrow">Selected work</p>
-        <h2 class="section__title">The kind of sites we build</h2>
-        <p class="section__lead">
-          A site we designed and launched, plus two concept builds that show the range,
-          from a one-page local service to a hospitality brand. Yours takes its place here once we build it.
-        </p>
+    <!-- ============ TRUST / FOX FEATURE ============ -->
+    <section class="foxfeat" id="proof" aria-label="What you get">
+      <div class="foxfeat__frame" aria-hidden="true">
+        <video class="foxfeat__video" id="foxVideo" muted playsinline preload="auto" fetchpriority="high"
+               poster="assets/fox/fox-point-poster.jpg">
+          <source src="assets/fox/fox-point.webm" type="video/webm" />
+          <source src="assets/fox/fox-point.mp4" type="video/mp4" />
+        </video>
+        <div class="foxfeat__scrim"></div>
       </div>
-
-      <div class="work-grid">
-        <article class="work-card reveal">
-          <div class="work-card__frame work-card__frame--a">
-            <div class="browser">
-              <div class="browser__bar"><i></i><i></i><i></i></div>
-              <img class="browser__shot" src="assets/work/websters.jpg" width="1100" height="692"
-                   alt="Webster's Skyvision website homepage, thermal drone recovery and aerial search" loading="lazy" />
-            </div>
-          </div>
-          <div class="work-card__meta">
-            <span class="badge badge--live">Live site</span>
-            <h3>Webster's Skyvision</h3>
-            <p>Thermal drone recovery and aerial search for a one-person Ohio operation. A fast one-page site built around tap-to-call.</p>
-            <span class="tag">one-page · click-to-call · gallery</span>
-          </div>
-        </article>
-
-        <article class="work-card reveal">
-          <div class="work-card__frame work-card__frame--b">
-            <div class="browser">
-              <div class="browser__bar"><i></i><i></i><i></i></div>
-              <img class="browser__shot" src="assets/work/stonefork.jpg" width="1100" height="692"
-                   alt="Concept website design for a backcountry hunting outfitter" loading="lazy" />
-            </div>
-          </div>
-          <div class="work-card__meta">
-            <span class="badge">Concept</span>
-            <h3>Hunting outfitter</h3>
-            <p>A guided backcountry outfit, bold and photo-forward, built to turn a visitor into a booked hunt.</p>
-            <span class="tag">outfitter · booking · photo-forward</span>
-          </div>
-        </article>
-
-        <article class="work-card reveal">
-          <div class="work-card__frame work-card__frame--c">
-            <div class="browser">
-              <div class="browser__bar"><i></i><i></i><i></i></div>
-              <img class="browser__shot" src="assets/work/wren.jpg" width="1100" height="692"
-                   alt="Concept website design for a neighborhood cafe and coffee bar" loading="lazy" />
-            </div>
-          </div>
-          <div class="work-card__meta">
-            <span class="badge">Concept</span>
-            <h3>Café &amp; coffee bar</h3>
-            <p>A neighborhood coffee shop, warm and simple, with the menu, hours, and directions front and center.</p>
-            <span class="tag">café · menu · hours · maps</span>
-          </div>
-        </article>
+      <div class="foxfeat__overlay">
+        <div class="foxfeat__panel">
+          <p class="eyebrow foxfeat__eyebrow foxcue" data-fox-cue="1.2">What you get</p>
+          <ul class="foxfeat__items">
+            <li class="foxfeat__item foxcue" data-fox-cue="2.0"><strong>Built from scratch</strong><span>No drag-and-drop templates</span></li>
+            <li class="foxfeat__item foxcue" data-fox-cue="2.6"><strong>Mobile-first</strong><span>Sharp on every screen</span></li>
+            <li class="foxfeat__item foxcue" data-fox-cue="3.2"><strong>Fast to load</strong><span>Speed people actually feel</span></li>
+            <li class="foxfeat__item foxcue" data-fox-cue="3.8"><strong>You deal with us</strong><span>No agency markup</span></li>
+          </ul>
+        </div>
       </div>
     </section>
 
@@ -386,7 +337,6 @@
       </a>
 
       <nav class="footer__links" aria-label="Footer">
-        <a href="#work">Work</a>
         <a href="#services">Services</a>
         <a href="#pricing">Pricing</a>
         <a href="#about">About</a>

@@ -65,6 +65,113 @@
     reveals.forEach(function (el) { io.observe(el); });
   }
 
+  /* ---------------- fox feature: full-bleed video, overlay synced to it ----------------
+     Replays from the start each time the section is scrolled into view (after
+     having finished). Each .foxcue element pops in when the video passes its
+     data-fox-cue timestamp, so the copy appears as the fox walks across the
+     frame. Every failure path ends in foxShowAll() — the info is never
+     allowed to stay hidden. Playback only starts once the video has enough
+     buffered to run without stalling (readyState check below) — starting on
+     an under-buffered video is what caused the stutter on a fast scroll-in. */
+  var foxVideo = document.getElementById('foxVideo');
+  var foxCues = document.querySelectorAll('.foxcue');
+  var foxRaf;
+
+  function foxShowAll() {
+    cancelAnimationFrame(foxRaf);
+    foxCues.forEach(function (el) { el.classList.add('is-shown'); });
+  }
+
+  if (foxCues.length && (!foxVideo || prefersReduced)) {
+    // reduced motion (or no video): poster already shows the pointing pose
+    foxShowAll();
+  } else if (foxVideo && foxCues.length) {
+    /* The copy is plain visible HTML by default. Only now that the reveal
+       machinery is actually running do we arm the CSS hidden state — so if
+       this script is blocked or fails to load, nothing is ever hidden. */
+    document.documentElement.classList.add('fox-js');
+
+    function foxReset() {
+      cancelAnimationFrame(foxRaf);
+      foxCues.forEach(function (el) { el.classList.remove('is-shown'); });
+    }
+
+    function foxTick() {
+      var t = foxVideo.currentTime;
+      var pending = 0;
+      foxCues.forEach(function (el) {
+        if (el.classList.contains('is-shown')) return;
+        if (t >= parseFloat(el.getAttribute('data-fox-cue'))) el.classList.add('is-shown');
+        else pending++;
+      });
+      if (!pending || foxVideo.ended) return; // job done — stop the loop
+      foxRaf = requestAnimationFrame(foxTick);
+    }
+
+    foxVideo.addEventListener('play', function () {
+      cancelAnimationFrame(foxRaf);
+      foxRaf = requestAnimationFrame(foxTick);
+    });
+    // capture phase because all-sources-failed errors fire at the <source> children —
+    // but a rejected first source (webm on Safari) also lands here, so only bail out
+    // when the whole element is actually dead
+    foxVideo.addEventListener('error', function (e) {
+      if (e.target === foxVideo || foxVideo.networkState === 3 /* NETWORK_NO_SOURCE */) foxShowAll();
+    }, true);
+
+    var foxActive = false;   // a run (play-through) is currently in progress
+    var foxTimeout;
+    function foxEndRun() {
+      foxActive = false;
+      foxShowAll();
+    }
+    foxVideo.addEventListener('ended', foxEndRun);
+
+    function foxPlayNow() {
+      var p = foxVideo.play();
+      if (p && p.catch) p.catch(foxEndRun); // autoplay blocked → just show everything
+    }
+
+    function foxStart() {
+      if (foxActive) return; // already mid-run — don't restart out from under it
+      foxActive = true;
+      foxReset();
+      foxVideo.currentTime = 0;
+      clearTimeout(foxTimeout);
+      foxTimeout = setTimeout(foxEndRun, 8000); // belt and suspenders
+
+      if (foxVideo.readyState >= 3 /* HAVE_FUTURE_DATA — enough buffered to play without an immediate stall */) {
+        foxPlayNow();
+      } else {
+        foxVideo.addEventListener('canplay', function onReady() {
+          foxVideo.removeEventListener('canplay', onReady);
+          if (foxActive) foxPlayNow();
+        });
+      }
+    }
+
+    // if the browser pauses the video mid-run (tab switch etc), pick it back up
+    document.addEventListener('visibilitychange', function () {
+      if (document.visibilityState === 'visible' && foxActive && foxVideo.paused && !foxVideo.ended) {
+        foxPlayNow();
+      }
+    });
+
+    if ('IntersectionObserver' in window) {
+      var foxIO = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) foxStart();
+          // leaving view mid-run is left alone — foxActive stays true so it
+          // won't restart out from under itself if the user scrolls back in
+          // before it's finished; once it ends, the next scroll-in replays it.
+        });
+      }, { threshold: 0.35 });
+      foxIO.observe(foxVideo.closest('.foxfeat') || foxVideo);
+    } else {
+      foxStart();
+    }
+  }
+
   /* ---------------- footer year ---------------- */
   var yearEl = document.getElementById('year');
   if (yearEl) yearEl.textContent = new Date().getFullYear();
